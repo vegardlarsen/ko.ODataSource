@@ -1,7 +1,7 @@
 #  ko.ODataSource
 ko.ODataSource is a utility class for Knockout that allows you to easily load data from an OData source (with filtering and/or ordering, tested with ASP.NET MVC4 WebApi).
 
-This utility is tiny (2kB before compression, 563 bytes after compression with YUI, 373 bytes after YUI+gzip).
+This utility is tiny (2167 bytes before compression, 637 bytes after compression with YUI, 408 bytes after YUI+gzip).
 
 ## Dependencies
 
@@ -66,6 +66,12 @@ The number of results per call to `next()`. Default `24`.
 A converter function to run for each data transfer object returned from the server. Defaults to adding the data transfer object directly to the observable array (e.g. the equivalent of `function(item) { return item; }`
 
 The converter function receives one argument (the data transfer object) and is expected to output whatever you want in your observable array, usually a view model.
+
+### `loading`
+Callback before we start loading items from the server. Great for adding a "loading" message.
+
+### `loaded`
+Callback after we have loaded items from the server. Great for removing a "loading" message.
 
 ## License
 

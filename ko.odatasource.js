@@ -5,6 +5,8 @@
             reachedEnd,
             resultsPerPage = options.perPage,
             converter = options.converter,
+            loading = options.loading || $.noop,
+            loaded = options.loaded || $.noop,
             foreach = ko.utils.arrayForEach,
             query,
             reset = function () {
@@ -16,6 +18,7 @@
 
         self.next = function () {
             if (!reachedEnd) {
+                loading();
                 $.get(url, query, function (data) {
                     var length = data.length;
                     reachedEnd = !length || length < resultsPerPage;
@@ -24,6 +27,7 @@
                         observableArray.push(converter ? converter(item) : item);
                     });
                     observableArray.valueHasMutated();
+                    loaded();
                 });
             }
             query.$skip += resultsPerPage;
@@ -32,6 +36,9 @@
         self.clear = function () {
             query = { $top: resultsPerPage };
             return reset();
+        };
+        self.eod = function () {
+            return reachedEnd;
         };
 
         // auto-generate two very similar methods
