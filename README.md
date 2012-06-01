@@ -1,7 +1,7 @@
 #  ko.ODataSource
 ko.ODataSource is a utility class for Knockout that allows you to easily load data from an OData source (with filtering and/or ordering, tested with ASP.NET MVC4 WebApi).
 
-This utility is tiny (2kB before compression, 589 bytes after compression with YUI, 381 bytes after YUI+gzip).
+This utility is tiny (2kB before compression, 563 bytes after compression with YUI, 373 bytes after YUI+gzip).
 
 ## Dependencies
 
@@ -47,9 +47,6 @@ The constructor accepts sets up the data source, and loads the first set of data
 
 ### `next()`
 Fetches the next set of results from the server, and adds them to the observable array.
-
-### `reset()`
-Empties the array, and resets the internal pointer to 0.
 
 ### `clear()`
 Calls `reset()`, then removes any filters and ordering.
