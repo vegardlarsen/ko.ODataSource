@@ -6,36 +6,33 @@
             resultsPerPage = options.perPage,
             converter = options.converter,
             foreach = ko.utils.arrayForEach,
-            query;
-
-
-        $.extend(self, {
-            next: function () {
-                if (!reachedEnd) {
-                    $.get(url, query, function (data) {
-                        var length = data.length;
-                        reachedEnd = !length || length < resultsPerPage;
-                        observableArray.valueWillMutate();
-                        foreach(data, function (item) {
-                            observableArray.push(converter ? converter(item) : item);
-                        });
-                        observableArray.valueHasMutated();
-                    });
-                }
-                query.$skip += resultsPerPage;
-                return this;
-            },
-            reset: function () {
+            query,
+            reset = function () {
                 query.$skip = 0;
                 reachedEnd = false;
                 observableArray([]);
                 return self;
-            },
-            clear: function () {
-                query = { $top: resultsPerPage };
-                return self.reset();
+            };
+
+        self.next = function () {
+            if (!reachedEnd) {
+                $.get(url, query, function (data) {
+                    var length = data.length;
+                    reachedEnd = !length || length < resultsPerPage;
+                    observableArray.valueWillMutate();
+                    foreach(data, function (item) {
+                        observableArray.push(converter ? converter(item) : item);
+                    });
+                    observableArray.valueHasMutated();
+                });
             }
-        });
+            query.$skip += resultsPerPage;
+            return this;
+        };
+        self.clear = function () {
+            query = { $top: resultsPerPage };
+            return reset();
+        };
 
         // auto-generate two very similar methods
         // both of these methods modify the query object to add an OData query parameter

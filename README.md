@@ -48,9 +48,6 @@ The constructor accepts sets up the data source, and loads the first set of data
 ### `next()`
 Fetches the next set of results from the server, and adds them to the observable array.
 
-### `reset()`
-Empties the array, and resets the internal pointer to 0.
-
 ### `clear()`
 Calls `reset()`, then removes any filters and ordering.
 
